@@ -3,7 +3,7 @@ title: "肉鸽游戏发展史——从 Rogue 到 Berlin Interpretation"
 date: 2026-07-26
 categories: ["游戏"]
 tags: ["肉鸽", "游戏设计"]
-description: "诺兰用黑洞和五维空间讲述了一个关于时间、爱与人类命运的寓言。"
+description: "总结肉鸽游戏的早期发展与柏林诠释分类标准的提出"
 toc: true
 math: true
 ---

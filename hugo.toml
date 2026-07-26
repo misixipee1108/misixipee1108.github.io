@@ -38,7 +38,7 @@ enableEmoji = true
 
 # 站点参数
 [params]
-  author = 'XXX'
+  author = 'Misixipee'
   description = '个人主页 — 项目成果 / 学习笔记 / 观点文章'
   avatar = '/images/prob.jpg'
 
