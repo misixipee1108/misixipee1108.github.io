@@ -1,0 +1,94 @@
+{{ define "main" }}
+<section class="list-page">
+  <header class="list-page__header">
+    <h1 class="list-page__title">{{ .Title }}</h1>
+    {{ with .Description }}
+      <p class="list-page__desc">{{ . }}</p>
+    {{ end }}
+    {{ with .Content }}
+      <div class="list-page__content">{{ . }}</div>
+    {{ end }}
+  </header>
+
+  <!-- 标签筛选 -->
+  {{ $section := .Section }}
+  {{ $allPages := where site.RegularPages "Section" $section }}
+  {{ $allTags := slice }}
+  {{ range $allPages }}
+    {{ range .Params.tags }}
+      {{ $allTags = $allTags | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $uniqueTags := $allTags | uniq | sort }}
+  {{ if $uniqueTags }}
+  <div class="tag-filter">
+    <button class="tag-filter__btn active" data-tag="all">全部</button>
+    {{ range $uniqueTags }}
+      <button class="tag-filter__btn" data-tag="{{ . | urlize }}">{{ . }}</button>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <!-- 文章列表 -->
+  <div class="post-list">
+    {{ range .Paginator.Pages }}
+    <article class="post-item" data-tags="{{ range .Params.tags }}{{ . | urlize }} {{ end }}">
+      {{ if .Params.cover }}
+        <a href="{{ .RelPermalink }}" class="post-item__cover">
+          <img src="{{ .Params.cover }}" alt="{{ .Title }}" loading="lazy" />
+        </a>
+      {{ end }}
+      <div class="post-item__body">
+        <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "2006-01-02" }}
+        </time>
+        <h2 class="post-item__title">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+        {{ with .Description }}
+          <p class="post-item__desc">{{ . }}</p>
+        {{ else }}
+          <p class="post-item__desc">{{ .Summary | truncate 120 }}</p>
+        {{ end }}
+        {{ with .Params.tags }}
+        <div class="post-item__tags">
+          {{ range . }}
+            <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+
+  <!-- 分页 -->
+  {{ template "_internal/pagination.html" . }}
+</section>
+
+<!-- 标签筛选 JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll('.tag-filter__btn');
+  const posts = document.querySelectorAll('.post-item');
+  if (!buttons.length) return;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      buttons.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const tag = this.dataset.tag;
+
+      posts.forEach(post => {
+        if (tag === 'all') {
+          post.style.display = '';
+        } else {
+          const tags = post.dataset.tags || '';
+          post.style.display = tags.includes(tag) ? '' : 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+{{ end }}

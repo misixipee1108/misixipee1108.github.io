@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="list-page">
+  <header class="list-page__header">
+    <h1 class="list-page__title">{{ .Title }}</h1>
+  </header>
+
+  <div class="taxonomy-cloud">
+    {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="taxonomy-item">
+        <span class="taxonomy-item__name">{{ .Title }}</span>
+        <span class="taxonomy-item__count">{{ len .Pages }}</span>
+      </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

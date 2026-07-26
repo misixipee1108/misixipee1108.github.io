@@ -1,0 +1,37 @@
+{{ define "main" }}
+<section class="list-page">
+  <header class="list-page__header">
+    <h1 class="list-page__title">{{ .Title }}</h1>
+    {{ with .Description }}
+      <p class="list-page__desc">{{ . }}</p>
+    {{ end }}
+    {{ with .Content }}
+      <div class="list-page__content">{{ . }}</div>
+    {{ end }}
+  </header>
+
+  {{ $projects := hugo.Data.projects }}
+  {{ if $projects }}
+  <div class="post-list">
+    {{ range $projects }}
+    <article class="post-item">
+      <time class="post-item__date">{{ .date }}</time>
+      <span class="post-item__title">
+        {{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
+      </span>
+      {{ with .description }}
+        <p class="post-item__desc">{{ . }}</p>
+      {{ end }}
+      {{ with .tags }}
+      <div class="post-item__tags">
+        {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+  {{ else }}
+    <p class="empty-state">暂无项目，敬请期待。</p>
+  {{ end }}
+</section>
+{{ end }}

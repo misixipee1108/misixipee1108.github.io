@@ -1,0 +1,51 @@
+{{ define "main" }}
+<article class="article">
+  <header class="article__header">
+    <h1 class="article__title">{{ .Title }}</h1>
+    <div class="article__meta">
+      {{ if .Date }}
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
+      {{ end }}
+      {{ if .ReadingTime }}
+        <span>· 阅读约 {{ .ReadingTime }} 分钟</span>
+      {{ end }}
+    </div>
+    {{ with .Params.tags }}
+    <div class="article__tags">
+      {{ range . }}
+        <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ with .Params.categories }}
+    <div class="article__categories">
+      {{ range . }}
+        <a href="{{ "categories/" | relURL }}{{ . | urlize }}" class="category-link">{{ . }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </header>
+
+  {{ if .Params.toc }}
+  <aside class="article__toc">
+    <h3>目录</h3>
+    {{ .TableOfContents }}
+  </aside>
+  {{ end }}
+
+  <div class="article__content">
+    {{ .Content }}
+  </div>
+
+  <footer class="article__footer">
+    <nav class="article__pager">
+      {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}" class="article__prev">← {{ .Title }}</a>
+      {{ end }}
+      {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}" class="article__next">{{ .Title }} →</a>
+      {{ end }}
+    </nav>
+  </footer>
+</article>
+{{ end }}

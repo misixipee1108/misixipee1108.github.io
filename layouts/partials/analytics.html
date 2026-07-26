@@ -1,0 +1,15 @@
+{{ if eq site.Params.analytics.provider "google" }}
+  {{ with site.Params.analytics.googleId }}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ . }}');
+  </script>
+  {{ end }}
+{{ else if eq site.Params.analytics.provider "umami" }}
+  {{ with site.Params.analytics.umamiId }}
+  <script async defer data-website-id="{{ . }}" src="{{ site.Params.analytics.umamiSrc }}"></script>
+  {{ end }}
+{{ end }}

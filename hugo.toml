@@ -1,0 +1,69 @@
+baseURL = 'https://misixipee1108.github.io/'
+locale = 'zh-CN'
+title = 'Misixipee 的个人主页'
+theme = 'zen'
+
+# 启用 emoji 支持
+enableEmoji = true
+
+# 代码高亮
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # 允许 HTML 内嵌
+  [markup.highlight]
+    style = 'github'
+    noClasses = false
+
+# 分类法
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+# 永久链接
+[permalinks]
+  notes = '/notes/:slug/'
+  articles = '/articles/:slug/'
+
+# 分页
+[pagination]
+  pagerSize = 10
+  path = 'page'
+
+# 站点参数
+[params]
+  author = 'XXX'
+  description = '个人主页 — 项目成果 / 学习笔记 / 观点文章'
+  avatar = '/images/prob.jpg'
+
+  # 社交链接
+  [[params.social]]
+    name = 'GitHub'
+    url = 'https://github.com/misixipee1108'
+    icon = 'github'
+  [[params.social]]
+    name = 'Bilibili'
+    url = 'https://space.bilibili.com/332411964'
+    icon = 'bilibili'
+
+  # 导航
+  [[params.nav]]
+    name = '项目'
+    url = '/projects/'
+  [[params.nav]]
+    name = '笔记'
+    url = '/notes/'
+  [[params.nav]]
+    name = '文章'
+    url = '/articles/'
+
+  # 分析
+  [params.analytics]
+    provider = ''  # 'google' 或 'umami'
+    googleId = ''  # GA4 Measurement ID
+    umamiId = ''   # Umami Website ID
+    umamiSrc = ''  # Umami 脚本 URL
+
+# 首页显示最近文章数
+[params.home]
+  recentLimit = 5

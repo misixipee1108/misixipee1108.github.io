@@ -1,0 +1,113 @@
+{{ define "main" }}
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__inner">
+    <h1 class="hero__title">{{ site.Params.author }}</h1>
+    <p class="hero__desc">{{ site.Params.description }}</p>
+  </div>
+</section>
+
+<!-- 关于我 -->
+{{ with site.GetPage "/about" }}
+<section class="home-about">
+  <div class="home-about__inner">
+    {{ with site.Params.avatar }}
+      <img class="home-about__avatar" src="{{ . | relURL }}" alt="{{ site.Params.author }}" />
+    {{ end }}
+    <div class="home-about__text">
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- 项目成果 -->
+{{ $projects := hugo.Data.projects | first 3 }}
+{{ if $projects }}
+<section class="home-section">
+  <h2 class="section-title">项目成果</h2>
+  <div class="post-list">
+    {{ range $projects }}
+    <article class="post-item">
+      <span class="post-item__title">
+        {{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
+      </span>
+      {{ with .description }}
+        <p class="post-item__desc">{{ . }}</p>
+      {{ end }}
+      {{ with .tags }}
+      <div class="post-item__tags">
+        {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+  <a href="/projects/" class="home-section__more">查看全部 →</a>
+</section>
+{{ end }}
+
+<!-- 学习笔记 -->
+{{ $recentNotes := where site.RegularPages "Section" "notes" | first 3 }}
+{{ if $recentNotes }}
+<section class="home-section">
+  <h2 class="section-title">学习笔记</h2>
+  <div class="post-list">
+    {{ range $recentNotes }}
+    <article class="post-item">
+      <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <a href="{{ .RelPermalink }}" class="post-item__title">{{ .Title }}</a>
+      {{ with .Params.tags }}
+      <div class="post-item__tags">
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+  <a href="/notes/" class="home-section__more">查看全部 →</a>
+</section>
+{{ end }}
+
+<!-- 观点文章 -->
+{{ $recentArticles := where site.RegularPages "Section" "articles" | first 3 }}
+{{ if $recentArticles }}
+<section class="home-section">
+  <h2 class="section-title">观点文章</h2>
+  <div class="post-list">
+    {{ range $recentArticles }}
+    <article class="post-item">
+      <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <a href="{{ .RelPermalink }}" class="post-item__title">{{ .Title }}</a>
+      {{ with .Params.tags }}
+      <div class="post-item__tags">
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+  <a href="/articles/" class="home-section__more">查看全部 →</a>
+</section>
+{{ end }}
+
+<!-- 最近更新 -->
+{{ $notes := where site.RegularPages "Section" "notes" }}
+{{ $articles := where site.RegularPages "Section" "articles" }}
+{{ $all := $notes | append $articles }}
+{{ $recent := sort $all ".Date" "desc" | first site.Params.home.recentLimit }}
+{{ if $recent }}
+<section class="home-recent">
+  <h2 class="section-title">最近更新</h2>
+  <div class="post-list">
+    {{ range $recent }}
+    <article class="post-item">
+      <time class="post-item__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <span class="post-item__section">[{{ .Section }}]</span>
+      <a href="{{ .RelPermalink }}" class="post-item__title">{{ .Title }}</a>
+    </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

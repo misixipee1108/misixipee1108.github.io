@@ -1,0 +1,15 @@
+{{/*
+  图片 Shortcode — 支持标题和放大查看
+  用法:
+    {{< img src="path" alt="描述" caption="图片标题" >}}
+*/}}
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $caption := .Get "caption" | default "" }}
+
+<figure class="article-figure">
+  <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy" />
+  {{ with $caption }}
+    <figcaption class="article-figure__caption">{{ . }}</figcaption>
+  {{ end }}
+</figure>

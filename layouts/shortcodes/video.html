@@ -1,0 +1,49 @@
+{{/*
+  视频嵌入 Shortcode
+  用法:
+    {{< video src="..." platform="youtube|bilibili|local" >}}
+    {{< video src="..." platform="bilibili" ratio="4-3" >}}
+*/}}
+{{ $src := .Get "src" }}
+{{ $platform := .Get "platform" | default "youtube" }}
+{{ $ratio := .Get "ratio" | default "16-9" }}
+
+<div class="video-embed video-embed--{{ $ratio }}">
+  {{ if eq $platform "youtube" }}
+    {{ $id := "" }}
+    {{ if findRE `youtube\.com/watch\?v=` $src }}
+      {{ $id = replaceRE `.*v=([^&]+).*` "$1" $src }}
+    {{ else if findRE `youtu\.be/` $src }}
+      {{ $id = replaceRE `.*youtu\.be/([^?]+).*` "$1" $src }}
+    {{ else }}
+      {{ $id = $src }}
+    {{ end }}
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/{{ $id }}"
+      title="YouTube video"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+  {{ else if eq $platform "bilibili" }}
+    {{ $bv := "" }}
+    {{ if findRE `bilibili\.com/video/` $src }}
+      {{ $bv = replaceRE `.*bilibili\.com/video/([^/?]+).*` "$1" $src }}
+    {{ else }}
+      {{ $bv = $src }}
+    {{ end }}
+    <iframe
+      src="https://player.bilibili.com/player.html?bvid={{ $bv }}&page=1&high_quality=1"
+      title="Bilibili video"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+
+  {{ else if eq $platform "local" }}
+    <video controls playsinline>
+      <source src="{{ $src }}" />
+      您的浏览器不支持视频播放。
+    </video>
+  {{ end }}
+</div>
