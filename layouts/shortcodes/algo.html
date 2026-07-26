@@ -1,0 +1,11 @@
+{{- $title := .Get "title" -}}
+{{- $input := .Get "input" -}}
+{{- $output := .Get "output" -}}
+{{- $caption := .Get "caption" -}}
+
+<div class="algo">
+{{- with $title }}<div class="algo__title"><strong>算法：</strong>{{ . }}</div>{{ end }}
+{{- with $input }}<div class="algo__io"><strong>输入：</strong>{{ . }}</div>{{ end }}
+{{- with $output }}<div class="algo__io"><strong>输出：</strong>{{ . }}</div>{{ end }}
+{{- if or $title $input $output }}<div class="algo__sep"></div>{{ end }}
+  <div class="algo__body">{{ trim .Inner "\n\r " }}</div></div>{{- with $caption }}<div class="algo__caption">{{ . }}</div>{{ end }}

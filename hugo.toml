@@ -11,6 +11,11 @@ enableEmoji = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true  # 允许 HTML 内嵌
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['$$', '$$']]
+        inline = [['$', '$']]
   [markup.highlight]
     style = 'github'
     noClasses = false
@@ -24,6 +29,7 @@ enableEmoji = true
 [permalinks]
   notes = '/notes/:slug/'
   articles = '/articles/:slug/'
+  thoughts = '/thoughts/:slug/'
 
 # 分页
 [pagination]
@@ -56,6 +62,9 @@ enableEmoji = true
   [[params.nav]]
     name = '文章'
     url = '/articles/'
+  [[params.nav]]
+    name = '杂谈'
+    url = '/thoughts/'
 
   # 分析
   [params.analytics]

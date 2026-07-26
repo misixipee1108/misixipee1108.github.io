@@ -157,7 +157,7 @@ li { margin-bottom: 0.3em; }
 .main {
   flex: 1;
   width: 100%;
-  max-width: 48rem;
+  max-width: 56rem;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
 }
@@ -244,7 +244,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 }
 
 .hero__inner {
-  max-width: 36rem;
+  max-width: 44rem;
   margin: 0 auto;
 }
 
@@ -298,7 +298,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 }
 
 .home-about__inner {
-  max-width: 42rem;
+  max-width: 50rem;
   margin: 0 auto;
   display: flex;
   align-items: flex-start;
@@ -486,7 +486,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 
 /* ---------- Article Page ---------- */
 .article {
-  max-width: 42rem;
+  max-width: 50rem;
   margin: 0 auto;
 }
 
@@ -538,6 +538,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 /* Article Content */
 .article__content {
   font-size: 1.05rem;
+  text-align: justify;
 }
 .article__content img {
   border-radius: var(--radius);
@@ -565,7 +566,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 
 /* ---------- List Page ---------- */
 .list-page {
-  max-width: 42rem;
+  max-width: 50rem;
   margin: 0 auto;
 }
 
@@ -591,7 +592,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 }
 
 .footer__inner {
-  max-width: 42rem;
+  max-width: 50rem;
   margin: 0 auto;
 }
 
@@ -853,4 +854,40 @@ html.theme-dark .project-card__status--已完成 {
 /* ---------- Home Recent ---------- */
 .home-recent {
   padding-top: 1rem;
+}
+
+/* ---------- Algorithm Block ---------- */
+.algo {
+  margin: 1.5em 0 0 0;
+  border-top: 2px solid var(--heading);
+  border-bottom: 2px solid var(--heading);
+  background: none;
+}
+
+.algo__title,
+.algo__io {
+  padding: 0.5em 0;
+  font-size: 0.9rem;
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  color: var(--text);
+}
+
+.algo__sep {
+  border-bottom: 1px solid var(--border);
+}
+
+.algo__body {
+  padding: 0.5em 0 0 0;
+  font-size: 0.88rem;
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  color: var(--text);
+}
+.algo__caption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: system-ui, -apple-system, sans-serif;
+  text-align: center;
 }
