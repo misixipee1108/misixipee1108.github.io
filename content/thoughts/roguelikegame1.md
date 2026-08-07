@@ -2,7 +2,7 @@
 title: "肉鸽游戏发展史——从 Rogue 到 Berlin Interpretation"
 date: 2026-07-26
 categories: ["游戏"]
-tags: ["肉鸽", "游戏设计"]
+tags: ["肉鸽", "游戏设计", "游戏史"]
 description: "总结肉鸽游戏的早期发展与柏林诠释分类标准的提出"
 toc: true
 math: true

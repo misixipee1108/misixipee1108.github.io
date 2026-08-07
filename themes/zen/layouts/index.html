@@ -15,7 +15,7 @@
 {{ end }}
 
 <!-- 项目成果 -->
-{{ $projects := hugo.Data.projects | first 3 }}
+{{ $projects := site.Data.projects | first 3 }}
 {{ if $projects }}
 <section class="home-section">
   <h2 class="section-title">项目成果</h2>

@@ -708,6 +708,9 @@ html.theme-dark .katex .mord,
 html.theme-dark .katex .mbin,
 html.theme-dark .katex .mrel { color: #d4cfc8; }
 
+/* KaTeX 字号对齐：取消默认 1.1em 放大 */
+.katex { font-size: 1em; }
+
 /* ==============================
    Extra: Projects, Papers, Taxonomy, Misc
    ============================== */

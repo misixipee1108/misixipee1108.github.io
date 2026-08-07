@@ -10,7 +10,7 @@
     {{ end }}
   </header>
 
-  {{ $projects := hugo.Data.projects }}
+  {{ $projects := site.Data.projects }}
   {{ if $projects }}
   <div class="post-list">
     {{ range $projects }}
