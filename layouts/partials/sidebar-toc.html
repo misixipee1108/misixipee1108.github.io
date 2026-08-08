@@ -1,0 +1,10 @@
+{{ if and .Params.toc .TableOfContents }}
+<aside class="sidebar-toc">
+  <div class="sidebar-toc__inner">
+    <h3 class="sidebar-toc__title">目录</h3>
+    <nav class="sidebar-toc__nav">
+      {{ .TableOfContents }}
+    </nav>
+  </div>
+</aside>
+{{ end }}
