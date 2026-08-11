@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+  {{ partial "katex.html" . }}
+  {{ partial "head.html" . }}
+  {{ partial "analytics.html" . }}
+</head>
+<body>
+  {{ partial "header.html" . }}
+  <main class="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  <button id="back-to-top" class="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
+  <!-- 搜索库 Fuse.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+  <!-- 站点脚本：合并压缩 -->
+  {{ $js := slice
+      (resources.Get "js/theme-toggle.js")
+      (resources.Get "js/image-zoom.js")
+      (resources.Get "js/toc-scroll.js")
+      (resources.Get "js/motion.js")
+      (resources.Get "js/search.js")
+    | resources.Concat "js/main.js"
+    | resources.Minify
+    | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" defer></script>
+</body>
+</html>

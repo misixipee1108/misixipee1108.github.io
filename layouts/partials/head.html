@@ -2,7 +2,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- 防止主题切换闪白：在 CSS 加载前立即应用正确的主题 -->
 <script>
-  (function(){var t=localStorage.getItem('theme-preference');if(!t){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.className='theme-'+t})();
+  (function(){var t=localStorage.getItem('theme-preference');if(!t){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.className='theme-'+t;document.documentElement.classList.add('js')})();
+</script>
+<!-- 动效偏好：在渲染前应用，防止动画闪跳 -->
+<script>
+  (function(){
+    var m = localStorage.getItem('motion-preference');
+    if (m === null) m = {{ if site.Params.motion.enabled | default true }}'on'{{ else }}'off'{{ end }};
+    if (m === 'off') document.documentElement.classList.add('motion-off');
+  })();
 </script>
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
 
@@ -18,6 +26,12 @@
 <!-- CSS -->
 {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
+
+<!-- 思源宋体 Web 字体（jsdelivr，国内可达；按 unicode-range 按需加载子集） -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/400.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" />
 
 <!-- RSS -->
 {{ range .AlternativeOutputFormats }}

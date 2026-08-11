@@ -52,7 +52,7 @@
       <a href="{{ .RelPermalink }}" class="post-item__title">{{ .Title }}</a>
       {{ with .Params.tags }}
       <div class="post-item__tags">
-        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>{{ end }}
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>{{ end }}
       </div>
       {{ end }}
     </article>
@@ -74,7 +74,7 @@
       <a href="{{ .RelPermalink }}" class="post-item__title">{{ .Title }}</a>
       {{ with .Params.tags }}
       <div class="post-item__tags">
-        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>{{ end }}
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>{{ end }}
       </div>
       {{ end }}
     </article>
@@ -99,7 +99,7 @@
       {{ end }}
       {{ with .Params.tags }}
       <div class="post-item__tags">
-        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>{{ end }}
+        {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>{{ end }}
       </div>
       {{ end }}
     </article>

@@ -53,7 +53,7 @@
         {{ with .Params.tags }}
         <div class="post-item__tags">
           {{ range . }}
-            <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+            <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>
           {{ end }}
         </div>
         {{ end }}

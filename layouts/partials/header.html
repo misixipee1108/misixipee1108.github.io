@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header__inner">
+    <a href="{{ site.Home.RelPermalink }}" class="header__logo">
+      {{ site.Title }}
+    </a>
+    <nav class="header__nav">
+      {{ range site.Params.nav }}
+        <a href="{{ .url }}" class="header__link">{{ .name }}</a>
+      {{ end }}
+    </nav>
+    {{ partial "search.html" . }}
+    <button class="motion-toggle" id="motionToggle" aria-label="开关动效" title="开关动效">
+      <span class="motion-toggle__icon motion-toggle__icon--on">✨</span>
+      <span class="motion-toggle__icon motion-toggle__icon--off">💤</span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+      <span class="theme-toggle__icon theme-toggle__icon--light">🌙</span>
+      <span class="theme-toggle__icon theme-toggle__icon--dark">☀️</span>
+    </button>
+  </div>
+</header>

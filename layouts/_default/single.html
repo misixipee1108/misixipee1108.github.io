@@ -1,4 +1,5 @@
 {{ define "main" }}
+<div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
 <div class="article-wrapper">
   {{ partial "sidebar-toc.html" . }}
   <article class="article">
@@ -15,7 +16,7 @@
       {{ with .Params.tags }}
       <div class="article__tags">
         {{ range . }}
-          <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">#{{ . }}</a>
+          <a href="{{ "tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>
         {{ end }}
       </div>
       {{ end }}

@@ -12,7 +12,8 @@
 
   // 应用主题
   function applyTheme(theme) {
-    html.className = 'theme-' + theme;
+    html.classList.remove('theme-dark', 'theme-light');
+    html.classList.add('theme-' + theme);
     localStorage.setItem(STORAGE_KEY, theme);
   }
 

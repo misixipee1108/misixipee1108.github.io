@@ -41,6 +41,10 @@ enableEmoji = true
   pagerSize = 10
   path = 'page'
 
+# 输出格式（首页额外生成 JSON 搜索索引）
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
 # 站点参数
 [params]
   author = 'Misixipee'
@@ -83,6 +87,10 @@ enableEmoji = true
     enable = true  # 全局开关；单篇文章可用 front matter 的 comments: false 关闭
     [params.comments.waline]
       serverURL = 'https://misixipee1108githubiodata.vercel.app'  # Waline 后端地址
+
+  # 动效
+  [params.motion]
+    enabled = true  # 首次访问时的默认状态（读者可用页头按钮自行开关，选择会记住）
 
 # 首页显示最近文章数
 [params.home]
