@@ -28,16 +28,11 @@
       {{ end }}
     </header>
 
-    {{ if .Params.toc }}
-    <aside class="article__toc">
-      <h3>目录</h3>
-      {{ .TableOfContents }}
-    </aside>
-    {{ end }}
-
     <div class="article__content">
       {{ .Content }}
     </div>
+
+    {{ partial "comments.html" . }}
 
     <footer class="article__footer">
       <nav class="article__pager">

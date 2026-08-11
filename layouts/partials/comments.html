@@ -1,0 +1,26 @@
+{{ $enabled := site.Params.comments.enable | default true }}
+{{ $pageEnabled := .Params.comments | default true }}
+{{ if and .IsPage $enabled $pageEnabled }}
+  {{ with site.Params.comments.waline.serverURL }}
+  <section class="article__comments">
+    <div id="waline"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.css" />
+    <script type="module">
+      import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.js';
+      init({
+        el: '#waline',
+        serverURL: '{{ . }}',
+        lang: 'zh-CN',
+        // 点赞：页面显示 👍 及计数（阅读数不显示，pageview 保持关闭）
+        reaction: ['👍'],
+        reactionOptions: {
+          page: true
+        },
+        pageview: false,
+        // 跟随 Zen 主题的暗色模式
+        dark: 'html.theme-dark'
+      });
+    </script>
+  </section>
+  {{ end }}
+{{ end }}

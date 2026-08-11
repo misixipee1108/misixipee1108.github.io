@@ -555,6 +555,26 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   max-height: calc(100vh - 6rem);
   overflow-y: auto;
   padding-right: 0.5rem;
+  /* 滚动条随主题变色 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-toc::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-toc::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-toc::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.sidebar-toc::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 .sidebar-toc__inner {
@@ -615,6 +635,16 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   opacity: 0.85;
 }
 
+/* 三级标题缩进 */
+.sidebar-toc__nav ul ul ul {
+  padding-left: 0.8rem;
+}
+
+.sidebar-toc__nav ul ul ul a {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
 /* Hide sidebar on smaller screens */
 @media (max-width: 1100px) {
   .main:has(.article-wrapper) {
@@ -652,6 +682,13 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
 }
 .article__content img:hover {
   opacity: 0.9;
+}
+
+/* Article Comments (Waline) */
+.article__comments {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
 }
 
 /* Article Footer */

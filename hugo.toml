@@ -20,6 +20,11 @@ enableEmoji = true
     style = 'github'
     noClasses = false
 
+  # 目录层级（侧边栏目录包含到 h4，如 2.1）
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 4
+
 # 分类法
 [taxonomies]
   tag = 'tags'
@@ -68,11 +73,17 @@ enableEmoji = true
 
   # 分析
   [params.analytics]
-    provider = ''  # 'google' 或 'umami'
+    provider = 'umami'  # 'google' 或 'umami'
     googleId = ''  # GA4 Measurement ID
-    umamiId = ''   # Umami Website ID
-    umamiSrc = ''  # Umami 脚本 URL
+    umamiId = 'c3b6c8f5-18d5-4fb9-a455-4b2fee8ad220'  # Umami Website ID
+    umamiSrc = 'https://cloud.umami.is/script.js'  # Umami 脚本 URL
+
+  # 评论与点赞（Waline）
+  [params.comments]
+    enable = true  # 全局开关；单篇文章可用 front matter 的 comments: false 关闭
+    [params.comments.waline]
+      serverURL = 'https://misixipee1108githubiodata.vercel.app'  # Waline 后端地址
 
 # 首页显示最近文章数
 [params.home]
-  recentLimit = 5
+  recentLimit = 2

@@ -1,5 +1,5 @@
 ---
-title: "为什么我认为开源是学术研究的未来"
+title: "Comming Soon"
 date: 2026-07-15
 tags: ["开源", "学术", "观点"]
 categories: ["思考"]
