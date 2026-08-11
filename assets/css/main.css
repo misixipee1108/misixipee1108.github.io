@@ -791,6 +791,13 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   scroll-margin-top: 5rem;
 }
 
+/* 正文加粗：字重 700 + 颜色加深，双通道提升可辨识度（中文宋体 500→700 差异不明显） */
+.article__content strong,
+.article__content b {
+  font-weight: 700;
+  color: var(--heading);
+}
+
 .article__content img {
   border-radius: var(--radius);
   margin: 1.5em auto;
