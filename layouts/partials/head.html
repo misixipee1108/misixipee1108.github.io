@@ -16,6 +16,8 @@
 
 <meta name="description" content="{{ if .IsHome }}{{ site.Params.description }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}{{ end }}" />
 <meta name="author" content="{{ site.Params.author }}" />
+<!-- Bing Webmaster 验证 -->
+<meta name="msvalidate.01" content="886C1368C074ADAA85AC6CBF5FE06308" />
 
 <!-- Open Graph -->
 <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}" />
