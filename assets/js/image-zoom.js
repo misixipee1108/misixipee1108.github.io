@@ -20,6 +20,7 @@
       // 点击关闭
       overlay.addEventListener('click', function() {
         overlay.remove();
+        document.removeEventListener('keydown', onKey);
       });
 
       // ESC 关闭

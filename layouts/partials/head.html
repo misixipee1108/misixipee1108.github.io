@@ -8,30 +8,60 @@
 <script>
   (function(){
     var m = localStorage.getItem('motion-preference');
-    if (m === null) m = {{ if site.Params.motion.enabled | default true }}'on'{{ else }}'off'{{ end }};
+    if (m === null) m = {{ if eq site.Params.motion.enabled false }}'off'{{ else }}'on'{{ end }};
     if (m === 'off') document.documentElement.classList.add('motion-off');
   })();
 </script>
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
 
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}" />
+<meta name="description" content="{{ if .IsHome }}{{ site.Params.description }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}{{ end }}" />
 <meta name="author" content="{{ site.Params.author }}" />
 
 <!-- Open Graph -->
 <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}" />
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}" />
+<meta property="og:description" content="{{ if .IsHome }}{{ site.Params.description }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}{{ end }}" />
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ .Permalink }}" />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{{- if .IsPage -}}
+{{ dict
+  "@context" "https://schema.org"
+  "@type" "Article"
+  "headline" .Title
+  "datePublished" (.PublishDate.Format "2006-01-02T15:04:05Z07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+  "author" (dict "@type" "Person" "name" site.Params.author)
+  "publisher" (dict "@type" "Organization" "name" site.Title)
+  "url" .Permalink
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  | jsonify | safeJS }}
+{{- else -}}
+{{ dict
+  "@context" "https://schema.org"
+  "@type" "WebSite"
+  "name" site.Title
+  "url" site.Home.Permalink
+  | jsonify | safeJS }}
+{{- end -}}
+</script>
 
 <!-- CSS -->
 {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
 
-<!-- 思源宋体 Web 字体（jsdelivr，国内可达；按 unicode-range 按需加载子集） -->
+<!-- 思源宋体 Web 字体（异步加载避免阻塞首屏；jsdelivr 国内可达；按 unicode-range 按需加载子集；正文 500 / 标题 700） -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/400.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" />
+<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" onload="this.onload=null;this.rel='stylesheet'" />
+<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" />
+</noscript>
 
 <!-- RSS -->
 {{ range .AlternativeOutputFormats }}

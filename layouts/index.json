@@ -7,7 +7,7 @@
         "date" (.Date.Format "2006-01-02")
         "tags" (.Params.tags | default slice)
         "categories" (.Params.categories | default slice)
-        "summary" (.Summary | plainify)
+        "summary" (.Summary | plainify | truncate 200)
   -}}
   {{- $result = $result | append $item -}}
 {{- end -}}

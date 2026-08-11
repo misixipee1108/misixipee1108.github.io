@@ -9,7 +9,7 @@
   --bg-card: #ffffff;
   --bg-elevated: #f5f1eb;
   --text: #3d3d3d;
-  --text-muted: #8c8279;
+  --text-muted: #6f6559;
   --heading: #2c2c2c;
   --accent: #8b5e3c;
   --accent-hover: #6b4c3b;
@@ -170,8 +170,6 @@ li { margin-bottom: 0.3em; }
   z-index: 100;
   background: var(--bg);
   border-bottom: 1px solid var(--border-light);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: background-color var(--transition), border-color var(--transition);
 }
 
@@ -323,6 +321,18 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   color: var(--text);
 }
 .home-about__text p:first-child { margin-top: 0; }
+.home-about__title {
+  /* 视觉隐藏但保留 h1 语义（SEO/读屏），不占视觉空间 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* ---------- Home Section (板块区块) ---------- */
 .home-section {
@@ -337,6 +347,112 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   font-family: system-ui, -apple-system, sans-serif;
   color: var(--text-muted);
   transition: color var(--transition);
+}
+
+/* ---------- Home Grid（2×2 卡片）---------- */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.25rem;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.home-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  box-shadow: var(--shadow-md);
+}
+
+.home-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.home-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+}
+.home-card__more {
+  font-size: 0.8rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+.home-card__more:hover {
+  color: var(--accent);
+}
+
+.home-card__desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 0.7rem;
+}
+
+.home-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.home-card__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.home-card__item-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  white-space: nowrap;
+}
+.home-card__item-cat {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+.home-card__item-title {
+  font-size: 0.95rem;
+  color: var(--heading);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.home-card__item-title a {
+  color: inherit;
+}
+.home-card__item-title a:hover {
+  color: var(--accent);
+}
+.home-card__item-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  flex-basis: 100%;
+  margin-bottom: 0;
+}
+.home-card__item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  flex-basis: 100%;
+  margin-top: 0.1rem;
 }
 
 /* ---------- Section Title ---------- */
@@ -680,6 +796,7 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   margin: 1.5em auto;
   cursor: zoom-in;
   transition: opacity var(--transition);
+  height: auto;
 }
 .article__content img:hover {
   opacity: 0.9;
@@ -839,6 +956,51 @@ html.theme-dark .katex .mord,
 html.theme-dark .katex .mbin,
 html.theme-dark .katex .mrel { color: #d4cfc8; }
 
+/* ---------- Code Highlight Dark Mode ----------
+   浅色模式下用 chroma 'github' 浅色风格；暗色模式下覆盖为暗底亮字（近似 One Dark 配色） */
+html.theme-dark .chroma {
+  background: #2d2a27;
+  color: #d4cfc8;
+}
+html.theme-dark .chroma .c, html.theme-dark .chroma .ch, html.theme-dark .chroma .cm,
+html.theme-dark .chroma .cp, html.theme-dark .chroma .c1, html.theme-dark .chroma .cs {
+  color: #8a847a;
+}
+html.theme-dark .chroma .k, html.theme-dark .chroma .kd, html.theme-dark .chroma .kn,
+html.theme-dark .chroma .kp, html.theme-dark .chroma .kr, html.theme-dark .chroma .kt {
+  color: #e06c75;
+}
+html.theme-dark .chroma .s, html.theme-dark .chroma .sb, html.theme-dark .chroma .sc,
+html.theme-dark .chroma .sd, html.theme-dark .chroma .s2, html.theme-dark .chroma .sh,
+html.theme-dark .chroma .si, html.theme-dark .chroma .sx, html.theme-dark .chroma .s1,
+html.theme-dark .chroma .ss {
+  color: #98c379;
+}
+html.theme-dark .chroma .m, html.theme-dark .chroma .mf, html.theme-dark .chroma .mh,
+html.theme-dark .chroma .mi, html.theme-dark .chroma .mo, html.theme-dark .chroma .mb,
+html.theme-dark .chroma .mx {
+  color: #d19a66;
+}
+html.theme-dark .chroma .nf, html.theme-dark .chroma .nx {
+  color: #61afef;
+}
+html.theme-dark .chroma .na, html.theme-dark .chroma .nb {
+  color: #e5c07b;
+}
+html.theme-dark .chroma .o, html.theme-dark .chroma .ow, html.theme-dark .chroma .p {
+  color: #c678dd;
+}
+html.theme-dark .chroma .nt {
+  color: #e06c75;
+}
+html.theme-dark .chroma .err {
+  color: #e06c75;
+  border: 1px solid #5c3a3a;
+}
+html.theme-dark .chroma .ln, html.theme-dark .chroma .lnt {
+  color: #7c6f64;
+}
+
 /* KaTeX 字号对齐：取消默认 1.1em 放大 */
 .katex { font-size: 1em; }
 
@@ -969,6 +1131,7 @@ html.theme-dark .project-card__status--已完成 {
 .article-figure img {
   border-radius: var(--radius);
   margin: 0 auto;
+  height: auto;
 }
 .article-figure__caption {
   margin-top: 0.5rem;
@@ -1320,6 +1483,12 @@ html.motion-off .motion-toggle__icon--off { display: inline; }
 }
 
 /* ---------- Responsive ---------- */
+/* 中间宽度（641-900px）：header 单行防溢出（搜索条允许收缩、导航更紧凑） */
+@media (max-width: 900px) {
+  .header__link { padding: 0.3rem 0.5rem; }
+  .site-search { min-width: 0; }
+}
+
 @media (max-width: 640px) {
   html { font-size: 16px; }
   .main { padding: 1.5rem 1rem 3rem; }
@@ -1328,6 +1497,7 @@ html.motion-off .motion-toggle__icon--off { display: inline; }
   .header__link { padding: 0.3rem 0.5rem; font-size: 0.82rem; }
   .site-search { width: 100%; order: 10; }
   .site-search__dropdown { left: 0; right: 0; width: auto; }
+  .home-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
   .hero { padding: 2rem 0 1.5rem; }
   .hero__title { font-size: 1.7rem; }
   .article__title { font-size: 1.6rem; }

@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tag === 'all') {
           post.style.display = '';
         } else {
-          const tags = post.dataset.tags || '';
+          const tags = (post.dataset.tags || '').split(' ').filter(Boolean);
           post.style.display = tags.includes(tag) ? '' : 'none';
         }
       });

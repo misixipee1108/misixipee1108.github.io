@@ -13,18 +13,28 @@
   let revealSetup = false;
 
   function setupReveal() {
-    if (revealSetup || !('IntersectionObserver' in window)) return;
+    if (revealSetup) return;
     revealSetup = true;
 
-    // 首页按 section 整体揭示；列表页按条目逐个揭示（带轻微交错）
-    const isHome = !!document.querySelector('.home-section');
+    // 首页按卡片整体揭示；列表页按条目逐个揭示（带轻微交错）
+    const isHome = !!document.querySelector('.home-grid');
     const targets = isHome
-      ? Array.from(document.querySelectorAll('.home-section'))
+      ? Array.from(document.querySelectorAll('.home-grid .home-card'))
       : Array.from(document.querySelectorAll('.post-list .post-item'));
 
     if (!targets.length) return;
 
-    targets.forEach((el, i) => {
+    // 无 IO 支持时：全部保持可见（不加 reveal）
+    if (!('IntersectionObserver' in window)) return;
+
+    // 仅在视口外的元素才做滚动揭示（首屏元素直接显示，不依赖动画）
+    const hidden = targets.filter((el) => {
+      const rect = el.getBoundingClientRect();
+      return !(rect.top < window.innerHeight - 32 && rect.bottom > 0);
+    });
+    if (!hidden.length) return;
+
+    hidden.forEach((el, i) => {
       el.classList.add('reveal');
       // 交错延迟：最多 240ms
       el.style.transitionDelay = `${Math.min(i * 40, 240)}ms`;
@@ -42,7 +52,22 @@
       { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
     );
 
-    targets.forEach((el) => io.observe(el));
+    hidden.forEach((el) => io.observe(el));
+
+    // 兜底：滚动/缩放时检查（兼容 IO 回调不触发的环境；强制跳变保证可见）
+    const onScroll = () => {
+      hidden.forEach((el) => {
+        if (el.classList.contains('is-visible')) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 32 && rect.bottom > 0) {
+          el.style.transition = 'none';
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
   }
 
   if (!motionOff()) setupReveal();

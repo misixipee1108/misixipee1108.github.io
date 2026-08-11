@@ -1,7 +1,8 @@
 baseURL = 'https://misixipee1108.github.io/'
-locale = 'zh-CN'
+defaultContentLanguage = 'zh-cn'
 title = 'Misixipee 的个人主页'
 theme = 'zen'
+enableRobotsTXT = true
 
 # 启用 emoji 支持
 enableEmoji = true
