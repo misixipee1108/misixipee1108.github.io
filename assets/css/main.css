@@ -809,6 +809,44 @@ html.theme-dark .theme-toggle__icon--dark { display: inline; }
   opacity: 0.9;
 }
 
+/* ---------- Tables ---------- */
+.article__content table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  background: var(--bg-card);
+}
+
+.article__content th,
+.article__content td {
+  border: 1px solid var(--border);
+  padding: 0.55em 0.9em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article__content thead th {
+  background: var(--bg-elevated);
+  color: var(--heading);
+  font-weight: 700;
+  border-bottom: 2px solid var(--border);
+}
+
+.article__content tbody tr:nth-child(even) {
+  background: var(--bg-elevated);
+}
+
+/* 移动端：表格横向滚动，避免溢出 */
+@media (max-width: 640px) {
+  .article__content table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 /* Article Comments (Waline) */
 .article__comments {
   margin-top: 3rem;
