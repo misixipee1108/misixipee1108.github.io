@@ -4,8 +4,12 @@
       {{ site.Title }}
     </a>
     <nav class="header__nav">
+      {{ $current := . }}
+      {{ $navSections := dict "/projects/" "projects" "/notes/" "notes" "/articles/" "articles" "/thoughts/" "thoughts" }}
       {{ range site.Params.nav }}
-        <a href="{{ .url }}" class="header__link">{{ .name }}</a>
+        {{ $sec := index $navSections .url }}
+        {{ $isActive := or (eq $current.RelPermalink .url) (and $sec (eq $current.Section $sec)) }}
+        <a href="{{ .url }}" class="header__link{{ if $isActive }} is-active{{ end }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .name }}</a>
       {{ end }}
     </nav>
     {{ partial "search.html" . }}

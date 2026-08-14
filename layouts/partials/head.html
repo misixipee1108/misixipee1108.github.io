@@ -16,6 +16,8 @@
 
 <meta name="description" content="{{ if .IsHome }}{{ site.Params.description }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}{{ end }}" />
 <meta name="author" content="{{ site.Params.author }}" />
+<!-- Favicon（原创太空风 SVG） -->
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}" />
 <!-- Bing Webmaster 验证 -->
 <meta name="msvalidate.01" content="886C1368C074ADAA85AC6CBF5FE06308" />
 
@@ -52,18 +54,38 @@
 {{- end -}}
 </script>
 
+<!-- 字体就绪门控：页面在字体可用前隐藏（杜绝回退字体闪烁）；3 秒兜底防卡死 -->
+<script>
+  (function () {
+    var html = document.documentElement;
+    if (!('fonts' in document)) return;
+    var opened = false;
+    function open() {
+      if (opened) return;
+      opened = true;
+      html.classList.remove('wf-gate');
+      html.classList.add('wf-ready');
+    }
+    html.classList.add('wf-gate');
+    var timer = setTimeout(open, 3000);
+    document.fonts.ready.then(function () { clearTimeout(timer); open(); });
+  })();
+</script>
 <!-- CSS -->
 {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
 
-<!-- 思源宋体 Web 字体（异步加载避免阻塞首屏；jsdelivr 国内可达；按 unicode-range 按需加载子集；正文 500 / 标题 700） -->
+<!-- Web 字体（同步加载：保证字体先于首帧绘制注册，页面切换不再闪烁；jsdelivr 国内可达；按 unicode-range 按需加载子集）
+     正文：Noto Serif SC（500/700）；界面/导航：Noto Sans SC（400/700）；
+     技术标注：IBM Plex Mono（400/500）；英文装饰：Bodoni Moda Italic（600） -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" onload="this.onload=null;this.rel='stylesheet'" />
-<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" onload="this.onload=null;this.rel='stylesheet'" />
-<noscript>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" />
-</noscript>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/500.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc/700.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc/400.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc/700.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/400.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/500.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/bodoni-moda/600-italic.css" />
 
 <!-- RSS -->
 {{ range .AlternativeOutputFormats }}

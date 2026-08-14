@@ -3,9 +3,13 @@
 <!-- 关于我 -->
 {{ with site.GetPage "/about" }}
 <section class="home-about">
+  <span class="home-about__sector" aria-hidden="true">PROFILE · SECTOR 00</span>
+  <span class="home-about__watermark" aria-hidden="true">Space Age Archive</span>
   <div class="home-about__inner">
     {{ with site.Params.avatar }}
-      <img class="home-about__avatar" src="{{ . | relURL }}" alt="{{ site.Params.author }}" />
+      <span class="home-about__avatar-frame">
+        <img class="home-about__avatar" src="{{ . | relURL }}" alt="{{ site.Params.author }}" />
+      </span>
     {{ end }}
     <div class="home-about__text">
       <h1 class="home-about__title">{{ site.Title }}</h1>

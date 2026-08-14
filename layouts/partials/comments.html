@@ -21,6 +21,23 @@
         dark: 'html.theme-dark'
       });
     </script>
+    <!-- 游客头像兜底：头像地址不可达（gravatar/libravatar/代理被墙）时
+         自动替换为站内默认头像，避免显示破图 -->
+    <script>
+      (function () {
+        var fallback = '{{ "images/avatar-default.svg" | relURL }}';
+        var box = document.querySelector('.article__comments') || document.querySelector('#waline');
+        if (!box) return;
+        box.addEventListener('error', function (e) {
+          var img = e.target;
+          if (!img || img.tagName !== 'IMG') return;
+          if (!/(^|\s)(wl-avatar|wl-user-avatar)(\s|$)/.test(img.className)) return;
+          if (img.getAttribute('src') === fallback) return;
+          img.onerror = null;   // 防止替换后死循环
+          img.src = fallback;
+        }, true);
+      })();
+    </script>
   </section>
   {{ end }}
 {{ end }}
