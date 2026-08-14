@@ -650,14 +650,29 @@ html.motion-off .motion-toggle__icon--off { display: inline-block; }
 .home-about__watermark {
   position: absolute;
   right: 0.3rem;
-  bottom: 0.4rem;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.65rem;
-  letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--chrome) 60%, transparent);
+  bottom: 0.5rem;
+  text-align: right;
   pointer-events: none;
   user-select: none;
+}
+.home-about__watermark-quote {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--chrome) 60%, transparent);
+}
+.home-about__watermark-src {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--chrome) 65%, transparent);
 }
 
 .home-about__inner {
@@ -1029,6 +1044,55 @@ html.motion-off .motion-toggle__icon--off { display: inline-block; }
   flex-wrap: wrap;
   gap: 0.3rem;
   margin-top: 0.3rem;
+}
+
+/* ---------- 标题星点流光（悬停文章标题时，标题下方丝带状星点） ---------- */
+.post-item__title {
+  position: relative;
+}
+.title-motes {
+  position: absolute;
+  height: 12px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.title-motes.is-active {
+  opacity: 1;
+}
+/* 丝带轨道细线（虚线，与星点同轴） */
+.title-motes__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7px;
+  height: 1px;
+  background: repeating-linear-gradient(90deg,
+    color-mix(in srgb, var(--accent) 40%, transparent) 0 6px,
+    transparent 6px 14px);
+  opacity: 0.55;
+}
+/* 四角星粒子 */
+.title-motes__star {
+  position: absolute;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
+  background: var(--mote-color, var(--yellow));
+  clip-path: polygon(50% 0, 60% 36%, 100% 50%, 60% 64%, 50% 100%, 40% 64%, 0 50%, 40% 36%);
+}
+/* 独立闪烁：不规律呼吸 */
+@keyframes mote-twinkle {
+  0%, 100% { opacity: 0.06; }
+  25%      { opacity: 0.9; }
+  50%      { opacity: 0.18; }
+  75%      { opacity: 0.65; }
+}
+/* 沿丝带缓慢漂移（幅度加大，流光更明显） */
+@keyframes mote-drift {
+  from { transform: translateX(-10px); }
+  to   { transform: translateX(14px); }
 }
 
 /* ---------- Tags & Categories：航空行李标签 ---------- */

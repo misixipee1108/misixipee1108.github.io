@@ -4,7 +4,10 @@
 {{ with site.GetPage "/about" }}
 <section class="home-about">
   <span class="home-about__sector" aria-hidden="true">PROFILE · SECTOR 00</span>
-  <span class="home-about__watermark" aria-hidden="true">Space Age Archive</span>
+  <span class="home-about__watermark" aria-hidden="true">
+    <span class="home-about__watermark-quote">Man will not merely endure: he will prevail</span>
+    <span class="home-about__watermark-src">William Faulkner · 1950</span>
+  </span>
   <div class="home-about__inner">
     {{ with site.Params.avatar }}
       <span class="home-about__avatar-frame">
