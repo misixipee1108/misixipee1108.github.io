@@ -11,31 +11,50 @@
         el: '#waline',
         serverURL: '{{ . }}',
         lang: 'zh-CN',
-        // 点赞：页面显示 👍 及计数（阅读数不显示，pageview 保持关闭）
+        // 点赞：页面显示 👍 及计数（v3 中 reaction 为数组即可；不要传 reactionOptions，v3 已移除该选项）
         reaction: ['👍'],
-        reactionOptions: {
-          page: true
-        },
         pageview: false,
         // 跟随 Zen 主题的暗色模式
         dark: 'html.theme-dark'
       });
     </script>
-    <!-- 游客头像兜底：头像地址不可达（gravatar/libravatar/代理被墙）时
-         自动替换为站内默认头像，避免显示破图 -->
+    <!-- 点赞者头像墙：后端 API 地址（vercel-likers/ 部署后生效；留空则禁用） -->
+    <script>
+      window.DSH_LIKERS_API = '{{ site.Params.comments.waline.likersAPI | default "" }}';
+    </script>
+    <!-- 游客头像兜底：头像 img 加载失败（任意域名）即换为站内默认；
+         空头像评论卡由 main.css 的 :has() 伪元素直接显示默认头像（抗 Vue 重渲染） -->
     <script>
       (function () {
-        var fallback = '{{ "images/avatar-default.svg" | relURL }}';
+        var FALLBACK = '{{ "images/avatar-default.svg" | relURL }}';
         var box = document.querySelector('.article__comments') || document.querySelector('#waline');
         if (!box) return;
+
+        /* 国内常见不可达头像域名（主动替换，不等报错） */
+        var BLOCKED = /^https?:\/\/(www\.)?(gravatar\.|libravatar\.|seccdn\.|avatar\.75cdn\.)/i;
+
+        /* 头像加载失败：无论域名，一律换成本地默认头像 */
         box.addEventListener('error', function (e) {
           var img = e.target;
           if (!img || img.tagName !== 'IMG') return;
           if (!/(^|\s)(wl-avatar|wl-user-avatar)(\s|$)/.test(img.className)) return;
-          if (img.getAttribute('src') === fallback) return;
-          img.onerror = null;   // 防止替换后死循环
-          img.src = fallback;
+          if ((img.getAttribute('src') || '') === FALLBACK) return;   // 已是默认图，防死循环
+          img.onerror = null;
+          img.src = FALLBACK;
         }, true);
+
+        /* 巡检：主动替换已知被墙域名的头像（Waline 异步渲染后补一轮） */
+        function patrol() {
+          box.querySelectorAll('img.wl-user-avatar, .wl-avatar img').forEach(function (img) {
+            var src = img.getAttribute('src') || '';
+            if (!src || src === '#' || BLOCKED.test(src)) {
+              if (src !== FALLBACK) img.src = FALLBACK;
+            }
+          });
+        }
+        new MutationObserver(function () { patrol(); })
+          .observe(box, { childList: true, subtree: true });
+        patrol();
       })();
     </script>
   </section>

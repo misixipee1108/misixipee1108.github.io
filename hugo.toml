@@ -88,6 +88,7 @@ enableEmoji = true
     enable = true  # 全局开关；单篇文章可用 front matter 的 comments: false 关闭
     [params.comments.waline]
       serverURL = 'https://misixipee1108githubiodata.vercel.app'  # Waline 后端地址
+      likersAPI = 'https://misixipee1108githubiodata.vercel.app/api/likers'  # 点赞者头像墙 API（部署 vercel-likers/ 后生效；留空禁用）
 
   # 动效
   [params.motion]

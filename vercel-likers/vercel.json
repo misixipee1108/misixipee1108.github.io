@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "functions": {
+    "api/likers.js": { "runtime": "nodejs20.x" }
+  },
+  "rewrites": [{ "source": "/api/likers", "destination": "/api/likers" }]
+}
