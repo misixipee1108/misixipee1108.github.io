@@ -1,0 +1,22 @@
+{
+  "rogue": {
+    "term": "肉鸽（Roguelike）",
+    "def": "一类以程序化生成地图、永久死亡与高重复可玩性为特征的角色扮演游戏，源于 1980 年的《Rogue: Exploring the Dungeons of Doom》。",
+    "link": "https://zh.wikipedia.org/wiki/Roguelike"
+  },
+  "sr": {
+    "term": "可达状态空间",
+    "def": "从初始状态 $s_0$ 出发，在合法动作与随机结果作用下能够到达的全部游戏状态的集合，记为 $S_R(s_0) \\subseteq S$。",
+    "link": "https://zh.wikipedia.org/wiki/状态空间"
+  },
+  "fm": {
+    "term": "Flow Matching（流匹配）",
+    "def": "一种生成模型训练方法：先人为指定从 $p_0$ 到 $p_1$ 的概率路径，再直接回归产生该路径的速度场 $\\boldsymbol{u}_t$，把训练转化为普通的有监督回归问题。",
+    "link": "https://arxiv.org/abs/2210.02747"
+  },
+  "cnf": {
+    "term": "连续归一化流（CNF）",
+    "def": "用常微分方程 $\\dfrac{\\mathrm{d}\\boldsymbol{x}_t}{\\mathrm{d}t}=\\boldsymbol{v}_\\theta(\\boldsymbol{x}_t,t)$ 描述概率密度搬运的生成模型。",
+    "link": "https://zh.wikipedia.org/wiki/标准化流"
+  }
+}

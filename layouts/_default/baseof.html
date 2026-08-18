@@ -14,6 +14,8 @@
   <button id="back-to-top" class="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
   <!-- 搜索库 Fuse.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+  <!-- 术语表数据（glossary.js 读取） -->
+  <script type="application/json" id="glossary-data">{{ site.Data.glossary | jsonify | safeJS }}</script>
   <!-- 站点脚本：合并压缩 -->
   {{ $js := slice
       (resources.Get "js/theme-toggle.js")
@@ -21,6 +23,7 @@
       (resources.Get "js/toc-scroll.js")
       (resources.Get "js/motion.js")
       (resources.Get "js/search.js")
+      (resources.Get "js/glossary.js")
       (resources.Get "js/stars.js")
       (resources.Get "js/title-motes.js")
       (resources.Get "js/likers.js")

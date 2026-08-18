@@ -1,0 +1,11 @@
+{{- /*
+  名词解释短代码 — 点击弹出解释小窗
+  用法:
+    {{< term key="fm" >}}Flow Matching{{< /term >}}
+    {{< term key="fm" text="FM" >}}            <!-- 用 text 参数替代内层文字 -->
+  数据源: data/glossary.json（key 对应其键），弹窗逻辑见 assets/js/glossary.js
+*/ -}}
+{{- $key := .Get "key" -}}
+{{- $text := trim (.Get "text" | default (.Inner | markdownify | plainify)) "\n\r " -}}
+{{- if not $text }}{{ $text = $key }}{{ end -}}
+<span class="term" role="button" tabindex="0" aria-expanded="false" data-term="{{ $key }}">{{ $text }}</span>

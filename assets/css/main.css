@@ -2242,6 +2242,97 @@ html.motion-off .home-about__avatar-frame::after {
   color: var(--on-accent);
 }
 
+/* ---------- Term Popup：名词解释弹窗 ---------- */
+/* 可点击术语：点状下划线示意 */
+.term {
+  border-bottom: 1px dotted var(--accent);
+  cursor: pointer;
+  color: inherit;
+  transition: color var(--transition);
+}
+.term:hover,
+.term:focus-visible {
+  color: var(--accent-text);
+}
+.term:focus-visible {
+  outline: 1px dotted var(--accent);
+  outline-offset: 2px;
+}
+
+/* 弹窗本体：单例，position:fixed，默认隐藏（visibility 保留布局以便测量） */
+.term-popup {
+  position: fixed;
+  z-index: 300;
+  max-width: min(320px, calc(100vw - 20px));
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity var(--transition), transform var(--transition), visibility 0s linear var(--transition);
+}
+.term-popup.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition-delay: 0s;
+}
+/* 箭头（朝上：默认弹窗在术语下方） */
+.term-popup::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: var(--arrow-x, 50%);
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--bg-card);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+/* 弹窗在术语上方时箭头朝下 */
+.term-popup.is-above::before {
+  top: auto;
+  bottom: -6px;
+  border-left: none;
+  border-top: none;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.term-popup__term {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--accent-text);
+  margin-bottom: 0.35rem;
+}
+.term-popup__def {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  font-family: var(--font-body);
+}
+.term-popup__def .katex-display {
+  margin: 0.3em 0;
+}
+.term-popup__link {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  font-family: var(--font-ui);
+  color: var(--link);
+  text-decoration: none;
+}
+.term-popup__link:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
 /* ---------- Responsive ---------- */
 /* 中间宽度（641-900px）：header 单行防溢出 */
 @media (max-width: 900px) {
