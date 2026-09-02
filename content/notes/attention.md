@@ -3,7 +3,7 @@ title: "Attention 注意力机制学习笔记"
 date: 2026-09-02
 tags: ["生成模型", "CV"]
 categories: ["机器学习"]
-description: "梳理基于 Transformer 的注意力机制及其变种"
+description: "梳理基于 Transformer 的注意力机制及多模态信息常用的交叉注意力机制"
 toc: true
 math: true
 ---
@@ -12,15 +12,15 @@ math: true
 
 简单讲，注意力机制可以理解为一种动态加权聚合机制，它借鉴了数据库中的查询手段，在传统数据库中，查询是离散的精确匹配：通过一个 Query 找到匹配的 Key，返回唯一的 Value。注意力机制借鉴了这种做法，并把原先返回唯一的 Value 改为返回一个不同 Value 的加权聚合值。其基本操作流程为，首先，根据需要查询的信息 Query，计算 Query 与每个 Key 之间的相似度，随后使用归一化函数 Softmax，将相似度转换为和为 1 的概率分布，最后使用该概率分布与 Value 进行加权聚合，得到最终的查询输出。具体公式即：
 
-$
+$$
 attention = \operatorname{softmax}\left(\frac{QK^\top}{s\sqrt{d_k}}+M\right)V
-$
+$$
 
 从公式上理解，可以简单理解为 $QK^\top$ 表示逐点的相似度，类似没有除以模长的余弦相似度，随后，除以 $\sqrt{d_k}$，目的是防止点积随着向量维度增大而变得过大，从而让 Softmax 保持稳定。$M$ 作为掩码，在因果生成和时序生成中可以进行设计，最后将输出做 Softmax，并和 Value 加权，获得最终解。
 
 ## 2. 怎么理解 Attention?
 
-简单的讲，Attention 可以理解为对信息的相关性做检索，然后进行整合，如果更一般的说，注意力是一个由输入动态生成的矩阵，通过输入动态生成 ${softmax}\left(\frac{QK^\top}{s\sqrt{d_k}}+M\right)$，随后对 Value 进行聚合检索。事实上，$Q$ $K$ $V$ 三个量可以来自不同的数据，这在后面的 Cross Attention 里可以具体体现。
+简单的讲，Attention 可以理解为对信息的相关性做检索，然后进行整合，如果更一般的说，注意力是一个由输入动态生成的矩阵，通过输入动态生成 $\operatorname{softmax}\left(\frac{QK^\top}{s\sqrt{d_k}}+M\right)$，随后对 Value 进行聚合检索。事实上，$Q$ $K$ $V$ 三个量可以来自不同的数据，这在后面的 Cross Attention 里可以具体体现。
 
 ## 3. Cross Attention
 
@@ -45,8 +45,7 @@ $
 分解式时空注意力把联合计算拆成空间注意力和时间注意力两个阶段。以“先空间、后时间”为例，首先在每一帧内部计算：
 
 $$
-y_{t,s}
-=
+y_{t,s}=
 \sum_{s'=1}^{S}
 \alpha^{\mathrm{space}}_{t,s,s'}v_{t,s'},
 $$
@@ -54,8 +53,7 @@ $$
 然后对相同空间索引的 token 沿时间维度计算：
 
 $$
-o_{t,s}
-=
+o_{t,s}=
 \sum_{t'=1}^{T}
 \beta^{\mathrm{time}}_{s,t,t'}y_{t',s}.
 $$
